@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Amor em Páginas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff5f5;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #ffb3ba;
+            padding: 50px 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        p.subtitulo {
+            font-size: 1.2em;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .foto-principal {
+            width: 100%;
+            max-width: 220px;       
+            height: 220px;          
+            object-fit: cover;      
+            object-position: center;
+            border-radius: 15px;    
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            margin: 15px 0;
+            border: 4px solid white;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ff6b6b;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Galeria de Fotos */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .galeria-item {
+            cursor: pointer;
+            position: center;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            height: 200px;
+        }
+
+        .galeria-item:hover {
+            transform: scale(1.05);
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Ícone de Play por cima da foto */
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .galeria-item:hover .play-icon {
+            opacity: 1;
+        }
+
+        /* Janela Flutuante do Vídeo (Modal) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            /* Ajustado para vídeos verticais ficarem lindos na tela */
+            max-width: 380px; 
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+        }
+
+        .modal-content video {
+            width: 100%;
+            display: block;
+        }
+
+        .fechar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1010;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        footer {
+            background-color: #ffb3ba;
+            color: white;
+            padding: 20px;
+            font-size: 0.9em;
+            margin-top: 50px;
+        }
+
+        .coracao {
+            color: #ff6b6b;
+            animation: pulsar 1.2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+		.btn-musica {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1em;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            margin: 15px auto;
+            display: inline-block;
+        }
+
+        .btn-musica:hover {
+            background-color: #ff4f4f;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-musica.tocando {
+            background-color: #4baf50;
+            box-shadow: 0 4px 10px rgba(75, 175, 80, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Para o Meu Amor, Sayonara</h1>
+        <p class="subtitulo">O melhor lugar do mundo é ao seu lado.</p>
+    </header>
+
+    <div class="container">
+        
+        <img src="alianca.jpeg.jpeg" alt="Nossa Foto" class="foto-principal">
+
+        <div class="card">
+            <h2>Nossa História <span class="coracao">♥</span></h2>
+            <p>Apesar de nunca termos nos mostrado, sem nem perceber tínhamos interesse um no outro que demorou muito para ser concretizado, os olhares que nunca se encontraram, hoje refletem com beijos e muito carinho.</p>
+        </div>
+
+        <div class="card">
+            <h2>Nossos Momentos</h2>
+            <p>ih da p clicar ali oh kkkkkk</p>
+            
+            <div class="galeria">
+                <div class="galeria-item" onclick="abrirVideo('gloss.mp4')">
+                    <img src="anonovo.jpeg.jpeg" alt="Momento 1">
+                    <span class="play-icon">▶</span>
+                </div>
+
+                <div class="galeria-item" onclick="abrirVideo('noite.mp4')">
+                    <img src="aniversario.jpeg" alt="Momento 2">
+                    <span class="play-icon">▶</span>
+                </div>
+
+                <div class="galeria-item" onclick="abrirVideo('video.mp4')">
+                    <img src="casa.jpeg.jpeg" alt="Momento 3">
+                    <span class="play-icon">▶</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="meuModal" class="modal" onclick="fecharVideo()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="fechar" onclick="fecharVideo()">&times;</span>
+            <video id="videoPlayer" controls></video>
+        </div>
+    </div>
+
+    <footer>
+        Com todo o meu amor ♥
+    </footer>
+
+<button id="botaoMusica" onclick="controlarMusica()" class="btn-musica">
+    🎵 Tocar Nossa Música
+</button>
+
+<audio id="minhaMusica" src="musica.mp3" loop></audio>
+    <script>
+	function abrirVideo(arquivoVideo) {
+            var video = document.getElementById('videoPlayer');
+            video.src = arquivoVideo;
+            document.getElementById('meuModal').style.display = "flex";
+            video.play();
+        }
+
+        function fecharVideo() {
+            var video = document.getElementById('videoPlayer');
+            document.getElementById('meuModal').style.display = "none";
+            video.pause();
+            video.src = ""; 
+        }
+
+        // 🎵 ADICIONE AQUI A FUNÇÃO DA MÚSICA:
+        function controlarMusica() {
+            var musica = document.getElementById('minhaMusica');
+            var botao = document.getElementById('botaoMusica');
+            
+            if (musica.paused) {
+                musica.play();
+                botao.innerHTML = "⏸ Pausar Música";
+                botao.classList.add('tocando');
+            } else {
+                musica.pause();
+                botao.innerHTML = "🎵 Tocar Nossa Música";
+                botao.classList.remove('tocando');
+            }
+        }
+        function abrirVideo(arquivoVideo) {
+            var video = document.getElementById('videoPlayer');
+            video.src = arquivoVideo;
+            document.getElementById('meuModal').style.display = "flex";
+            video.play(); // Dá o play automático ao abrir
+        }
+
+        function fecharVideo() {
+            var video = document.getElementById('videoPlayer');
+            document.getElementById('meuModal').style.display = "none";
+            video.pause(); // Pausa o vídeo para não continuar o som ao fechar
+            video.src = ""; 
+        }
+    </script>
+
+</body>
+</html>
